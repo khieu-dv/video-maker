@@ -4,6 +4,8 @@
 WIDTH=1920
 HEIGHT=1080
 FPS=30
+ulimit -n 4096
+
 
 # Thời lượng hiển thị mỗi ảnh và hiệu ứng chuyển đổi
 IMAGE_DURATION=5
@@ -14,7 +16,7 @@ SHOW_DESCRIPTIONS=true
 
 # Tạo danh sách ảnh từ thư mục images
 IMAGES=()
-for img in images/*.{jpg,jpeg,png}; do
+for img in images3/*.{jpg,jpeg,png}; do
     [[ -f "$img" ]] && IMAGES+=("$img")
 done
 
@@ -25,17 +27,60 @@ fi
 
 # Tạo mảng chứa mô tả cho từng ảnh
 DESCRIPTIONS=(
-    "Phong cảnh đẹp tại Vịnh Hạ Long"
-    "Hoàng hôn trên bãi biển Nha Trang"
-    "Núi non hùng vĩ tại Sa Pa"
-    "Hoa sen mùa hạ ở Hà Nội"
-    "Phố cổ Hội An về đêm"
-    "Rừng nhiệt đới Tây Nguyên"
-    "Thác nước hùng vĩ tại Đà Lạt"
-    "Ruộng bậc thang Mù Cang Chải"
-    "Mùa thu trên đồi chè Mộc Châu"
-    "Lễ hội truyền thống Việt Nam"
+  "Em là nắng khiến tim anh khẽ chao"
+  "Ánh mắt ấy như ngàn vì sao lấp lánh"
+  "Gió khẽ lay tà váy em dịu dàng"
+  "Nụ cười em làm ngày anh rực rỡ"
+  "Mắt em sâu như cả một vũ trụ"
+  "Dáng em nghiêng, lòng anh nghiêng theo"
+  "Tóc em bay, hồn anh cũng nhẹ trôi"
+  "Em như thơ giữa đời thường cằn cỗi"
+  "Chỉ một ánh nhìn, cả thế giới dịu êm"
+  "Giọng em vang như bản tình ca lặng lẽ"
+  "Đôi môi ấy như mùa xuân vừa hé"
+  "Em dịu dàng như mây lướt ngang trời"
+  "Chạm vào ánh mắt là chạm cả trời thương"
+  "Em mang nỗi nhớ giấu trong từng bước nhẹ"
+  "Giữa bao ánh sáng, em vẫn là bình minh"
+  "Em lặng im, anh nghe lòng xao động"
+  "Từng nhịp chân em là thơ lạc phố"
+  "Áo em bay như sóng nhỏ giữa chiều"
+  "Em là mộng, là mây, là men say"
+  "Một lần gặp, trọn đời chẳng thể quên"
+  "Em như khúc hát chưa từng ai viết"
+  "Mỗi lần em cười, nỗi buồn tan biến"
+  "Gần em một chút, đời bỗng dịu dàng"
+  "Tình em như gió, không thấy mà say"
+  "Đôi tay ấy như mùa thu dịu nhẹ"
+  "Chạm khẽ trái tim, em khiến trời rung"
+  "Em là bản tình ca anh chưa từng hát"
+  "Làn da em – ánh trăng của đêm hè"
+  "Vẻ đẹp ấy khiến thời gian dừng lại"
+  "Mỗi dáng em đi là một vần thơ"
+  "Trong mắt em là cả một mùa xuân"
+  "Ngực em là gối mộng giữa thiên đàng"
+  "Tình em như rượu, uống vào là nhớ"
+  "Ánh nhìn em – tia nắng sớm tinh khôi"
+  "Anh lạc lối trong hương em vô định"
+  "Giữa biển người, em là hoàng hôn lặng"
+  "Chút mơ màng trong dáng em tinh khôi"
+  "Em như hương hoa – thoảng thôi cũng nhớ"
+  "Vòng eo nhỏ – một nét đẹp nên thơ"
+  "Ánh mắt em – chiếc chìa khóa trái tim"
+  "Ngồi bên em, cả thế giới hóa mộng"
+  "Thầm gọi tên em giữa gió xuân về"
+  "Làn da ấy – trang giấy trắng tình đầu"
+  "Cả thế gian gói gọn trong em đấy"
+  "Môi em đỏ như hồng khẽ chớm sương"
+  "Chỉ cần em đứng đó, tim anh loạn nhịp"
+  "Em bước nhẹ như cánh hoa chạm nắng"
+  "Giữa chiều thu, em là vầng trăng mộng"
+  "Em cười thôi, trời đất cũng ngẩn ngơ"
+  "Tình anh gửi theo làn tóc em bay"
+  "Em là thơ, là nhạc, là giấc mơ"
 )
+
+
 
 # Điều chỉnh mảng mô tả nếu số lượng ảnh nhiều hơn số lượng mô tả
 if [ ${#IMAGES[@]} -gt ${#DESCRIPTIONS[@]} ]; then
@@ -158,7 +203,7 @@ if [ $LOOP_COUNT -gt 1 ]; then
     FINAL_SLIDE="slide$(($LOOP_COUNT*${#IMAGES[@]}-1))"
 fi
 
-FILTER_COMPLEX+="[${FINAL_SLIDE}]drawtext=text='My Beautiful Slideshow':fontcolor=white:fontsize=36:box=1:boxcolor=black@0.5:boxborderw=5:x=(w-text_w)/2:y=20:enable='between(t,0,10)',format=yuv420p[video]"
+FILTER_COMPLEX+="[${FINAL_SLIDE}]drawtext=text='Em là ánh nắng':fontcolor=white:fontsize=36:box=1:boxcolor=black@0.5:boxborderw=5:x=(w-text_w)/2:y=20:enable='between(t,0,10)',format=yuv420p[video]"
 
 # Thực thi lệnh FFmpeg
 eval "ffmpeg -y ${INPUTS} -filter_complex \"${FILTER_COMPLEX}\" -map \"[video]\" -map $(( ${#IMAGES[@]} )):a -c:v libx264 -preset slow -crf 18 -c:a aac -b:a 320k -r $FPS -shortest -profile:v high -level 4.2 -movflags +faststart output_enhanced.mp4"
