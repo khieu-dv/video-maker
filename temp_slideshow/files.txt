@@ -1,4 +1,0 @@
-# Danh sách tệp để nối
-file 'intro.mp4'
-file 'main.mp4'
-file 'outro.mp4'
