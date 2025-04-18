@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Thư mục chứa ảnh gốc
-SOURCE_FOLDER="images2/hotgirl"
+SOURCE_FOLDER="images_original/hotgirl"
 # Thư mục đích
 DEST_FOLDER="images3"
 
